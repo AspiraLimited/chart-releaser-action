@@ -32,6 +32,7 @@ Usage: $(basename "$0") <options>
     -u, --charts-repo-url    The GitHub Pages URL to the charts repo (default: https://<owner>.github.io/<repo>)
     -o, --owner              The repo owner
     -r, --repo               The repo name
+    -D, --debug              Enable debug mode
 EOF
 }
 
@@ -89,6 +90,9 @@ parse_command_line() {
             -h|--help)
                 show_help
                 exit
+                ;;
+            -D|--debug)
+                set +x
                 ;;
             -v|--version)
                 if [[ -n "${2:-}" ]]; then
