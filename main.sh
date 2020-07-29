@@ -17,7 +17,6 @@
 set -o errexit
 set -o nounset
 set -o pipefail
-set -x
 
 SCRIPT_DIR=$(dirname -- "$(readlink -f "${BASH_SOURCE[0]}" || realpath "${BASH_SOURCE[0]}")")
 
@@ -28,16 +27,16 @@ main() {
     args=(--owner "$owner" --repo "$repo")
     args+=(--charts-dir "${INPUT_CHARTS_DIR?Input 'charts_dir' is required}")
 
+    if [[ -n "${INPUT_DEBUG:-}" ]]; then
+        args+=(--debug)
+    fi
+
     if [[ -n "${INPUT_VERSION:-}" ]]; then
         args+=(--version "${INPUT_VERSION}")
     fi
 
     if [[ -n "${INPUT_CHARTS_REPO_URL:-}" ]]; then
         args+=(--charts-repo-url "${INPUT_CHARTS_REPO_URL}")
-    fi
-
-    if [[ -n "${INPUT_DEBUG:-}" ]]; then
-        args+=(--debug)
     fi
 
     "$SCRIPT_DIR/cr.sh" "${args[@]}"

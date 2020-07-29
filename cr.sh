@@ -92,7 +92,7 @@ parse_command_line() {
                 exit
                 ;;
             -D|--debug)
-                set +x
+                set -x
                 ;;
             -v|--version)
                 if [[ -n "${2:-}" ]]; then
